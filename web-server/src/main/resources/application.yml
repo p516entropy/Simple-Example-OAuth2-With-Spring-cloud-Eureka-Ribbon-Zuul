@@ -1,0 +1,45 @@
+server:
+  port: 7070
+spring:
+  application:
+    name: gateway-service
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+zuul:
+  routes:
+    resource:
+      sensitiveHeaders:
+      path: /resource/**
+      serviceId: rest-service
+    auth:
+      sensitiveHeaders:
+      #should be same as auth server context path
+      path: /auth/**
+      serviceId: auth-service
+      #should be false if server has custom context path
+      strip-prefix: false
+  add-host-header: true
+sso:
+  client:
+    accessTokenUri: http://localhost:7070/auth/oauth/token
+    userAuthorizationUri: http://localhost:7070/auth/oauth/authorize
+    clientId: clientIdMock
+    clientSecret: clientSecretMock
+  resource:
+    userInfoUri: http://localhost:7070/resource/rest/me
+logging:
+  level:
+    org.springframework.security: DEBUG
+ribbon:
+  eureka:
+    enabled: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password@localhost:8761/eureka/
+    registerWithEureka: true

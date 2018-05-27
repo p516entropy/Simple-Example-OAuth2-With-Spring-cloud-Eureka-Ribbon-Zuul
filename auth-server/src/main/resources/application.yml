@@ -1,0 +1,23 @@
+server:
+  port: 9090
+  use-forward-headers: true
+  context-path: /auth
+spring:
+  thymeleaf:
+    cache: false
+  application:
+    name: auth-service
+management:
+  port: -1
+logging:
+ level:
+  org.springframework.security: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password@localhost:8761/eureka/
+    registerWithEureka: true
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+
