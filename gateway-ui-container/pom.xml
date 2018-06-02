@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <project
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-		xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.lungesoft.architecture</groupId>
-	<artifactId>web-server</artifactId>
+	<artifactId>ui-container</artifactId>
 	<version>1.0</version>
-	<name>discovery-service</name>
+	<name>ui-container</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,15 +41,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-client</artifactId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -143,7 +143,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>com.lungesoft.architecture.eureka.RegWebapp</mainClass>
+					<mainClass>com.lungesoft.architecture.web.server.GatewayUiContainer</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -159,7 +159,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.lungesoft.architecture.eureka.RegWebapp</mainClass>
+							<mainClass>com.lungesoft.architecture.web.server.GatewayUiContainer</mainClass>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>

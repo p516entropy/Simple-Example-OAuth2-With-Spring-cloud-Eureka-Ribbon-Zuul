@@ -1,6 +1,7 @@
 package com.lungesoft.architecture.oauth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,7 +12,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -23,6 +27,9 @@ import java.util.Collections;
 @Configuration
 public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    @Value("${oauth2.jwt-secret-key}")
+    private String jwtSecretKey;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -30,6 +37,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(final ClientDetailsServiceConfigurer clients)
             throws Exception {
         clients.withClientDetails(clientId -> {
+            //CAN-TODO here you can customize your oauth2 clients managing
             final String clientIdMock = "clientIdMock";
             final String clientSecretMock = "clientSecretMock";
             final Collection<String> scopeMock = Collections.singleton("auth");
@@ -48,8 +56,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer)
-            throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .tokenKeyAccess("permitAll()")
@@ -63,15 +70,22 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        //CAN-TODO write your own UserAuthenticationConverter.convertUserAuthentication
+        //to convert Authentication object with custom Principle to Json Web Token.
+        final UserAuthenticationConverter authenticationConverter = new DefaultUserAuthenticationConverter();
+
+        final DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+        defaultAccessTokenConverter.setUserTokenConverter(authenticationConverter);
+
+        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(jwtSecretKey);
         return converter;
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-            throws Exception {
-        endpoints.authenticationManager(authenticationManager)
+    public void configure(AuthorizationServerEndpointsConfigurer serverEndpointsConfigurer) {
+        serverEndpointsConfigurer
+                .authenticationManager(authenticationManager)
                 .accessTokenConverter(accessTokenConverter());
     }
 }

@@ -7,6 +7,8 @@ spring:
     cache: false
   application:
     name: auth-service
+oauth2:
+  jwt-secret-key: 12345
 management:
   port: -1
 logging:

@@ -17,12 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
     @Autowired
     private ProjectRepository projectRepository;
-
     @Autowired
     private ModelMapper modelMapper;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     @Override
     public ProjectModel getProjectResource(Long id) {

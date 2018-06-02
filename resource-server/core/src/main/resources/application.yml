@@ -3,11 +3,17 @@ server:
 logging:
  level:
   org.springframework.web: DEBUG
-auth:
- server:
-  url: http://localhost:9090/auth/oauth/check_token
-  clientId: clientIdMock
-  clientsecret: clientSecretMock
+#properties for remote token validation
+#auth:
+# server:
+#  url: http://localhost:9090/auth/oauth/check_token
+#  clientId: clientIdMock
+#  clientsecret: clientSecretMock
+
+#self token validation
+#key should be same as auth server's key
+oauth2:
+  jwt-secret-key: 12345
 management:
   port: -1
 spring:

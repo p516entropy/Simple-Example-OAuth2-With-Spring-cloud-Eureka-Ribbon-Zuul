@@ -8,10 +8,10 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 @SpringBootApplication
 @EnableZuulProxy
 @EnableDiscoveryClient
-public class WebappUi {
+public class GatewayUiContainer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebappUi.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayUiContainer.class, args);
+    }
 
 }

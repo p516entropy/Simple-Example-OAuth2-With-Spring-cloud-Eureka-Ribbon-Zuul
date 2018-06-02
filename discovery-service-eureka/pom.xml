@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+		xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.lungesoft.architecture</groupId>
-	<artifactId>web-server</artifactId>
+	<artifactId>discovery-service</artifactId>
 	<version>1.0</version>
-	<name>web-server</name>
+	<name>discovery-service</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spring-boot.version>1.5.10.RELEASE</spring-boot.version>
-		<!--<spring-security-oauth2.version>2.3.0.RELEASE</spring-security-oauth2.version>-->
 		<java.version>1.8</java.version>
 		<junit.version>4.11</junit.version>
 	</properties>
@@ -42,15 +41,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -144,7 +143,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>com.lungesoft.architecture.web.server.WebappUi</mainClass>
+					<mainClass>com.lungesoft.architecture.eureka.DiscoveryServiceWebapp</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -160,7 +159,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.lungesoft.architecture.web.server.WebappUi</mainClass>
+							<mainClass>com.lungesoft.architecture.eureka.DiscoveryServiceWebapp</mainClass>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>
